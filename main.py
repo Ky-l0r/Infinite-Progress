@@ -10,7 +10,7 @@ class GradeTrackerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("学生成绩追踪系统")
-        self.root.geometry("1000x700")
+        self.root.geometry("1440x1080")
         
         # 数据库初始化
         self.db_path = "student_grades.db"
@@ -68,6 +68,10 @@ class GradeTrackerApp:
         # 刷新学生列表按钮
         refresh_btn = ttk.Button(button_frame, text="刷新学生列表", command=self.load_students)
         refresh_btn.pack(side=tk.LEFT, padx=(0, 10))
+        
+        # 关于按钮
+        about_btn = ttk.Button(button_frame, text="关于", command=self.show_about)
+        about_btn.pack(side=tk.RIGHT, padx=(0, 10))
         
         # 成绩统计信息区域
         stats_frame = ttk.LabelFrame(main_frame, text="成绩统计", padding="10")
@@ -128,6 +132,66 @@ class GradeTrackerApp:
         
         # 加载学生列表
         self.load_students()
+    
+    def show_about(self):
+        """显示关于窗口"""
+        about_window = tk.Toplevel(self.root)
+        about_window.title("关于")
+        about_window.geometry("400x300")
+        about_window.resizable(False, False)
+        
+        # 居中显示关于窗口
+        about_window.transient(self.root)
+        about_window.grab_set()
+        
+        # 获取主窗口位置并居中显示
+        x = self.root.winfo_x() + 50
+        y = self.root.winfo_y() + 50
+        about_window.geometry(f"+{x}+{y}")
+        
+        # 创建内容框架
+        content_frame = ttk.Frame(about_window, padding="20")
+        content_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # 应用程序标题
+        title_label = ttk.Label(content_frame, text="学生成绩追踪系统", 
+                               font=("Arial", 16, "bold"))
+        title_label.pack(pady=(0, 10))
+        
+        # 版本信息
+        version_label = ttk.Label(content_frame, text="版本: 1.0", 
+                                 font=("Arial", 10))
+        version_label.pack(pady=(0, 10))
+        
+        # 作者信息
+        author_label = ttk.Label(content_frame, text="开发人员: [YYK XJH SCR IMFLypAnda]", 
+                                font=("Arial", 10))
+        author_label.pack(pady=(0, 5))
+        
+        # 联系信息
+        contact_label = ttk.Label(content_frame, text="联系方式: [嘉善二高科创社]", 
+                                 font=("Arial", 10))
+        contact_label.pack(pady=(0, 5))
+        
+        # 开发时间
+        date_label = ttk.Label(content_frame, text="开发时间: 2026年", 
+                              font=("Arial", 10))
+        date_label.pack(pady=(0, 15))
+        
+        # 功能说明
+        description_text = "这是一个学生成绩追踪系统，支持从Excel导入成绩数据，\n可视化展示学生成绩趋势，并提供统计分析功能。"
+        desc_label = ttk.Label(content_frame, text=description_text, 
+                              font=("Arial", 9), justify=tk.CENTER)
+        desc_label.pack(pady=(0, 15))
+        
+        # 版权信息
+        copyright_label = ttk.Label(content_frame, text="© 2026 嘉善二高科创社版权所有", 
+                                   font=("Arial", 9))
+        copyright_label.pack(pady=(0, 10))
+        
+        # 确定按钮
+        ok_button = ttk.Button(content_frame, text="确定", command=about_window.destroy)
+        ok_button.pack()
         
     def import_excel(self):
         """导入Excel文件"""
